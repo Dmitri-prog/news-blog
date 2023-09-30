@@ -141,9 +141,8 @@ class ProfileListView(generic.ListView):
                 pub_date__lte=timezone.now(),
                 is_published=True,
                 author__username=self.kwargs['username']
-            ).annotate(
-             comment_count=models.Count('comments')
-            ).order_by('-pub_date',)
+            ).annotate(comment_count=models.Count('comments')).order_by(
+                '-pub_date',)
         return Post.objects.filter(
             author__username=self.kwargs['username']).annotate(
             comment_count=models.Count('comments')).order_by('-pub_date',)

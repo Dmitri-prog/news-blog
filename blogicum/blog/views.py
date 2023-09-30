@@ -142,13 +142,13 @@ class ProfileListView(generic.ListView):
                 is_published=True,
                 author__username=self.kwargs['username']
             ).annotate(
-                comment_count=models.Count('comments')
-            ).order_by('-pub_date',)
+             comment_count=models.Count('comments')
+             ).order_by('-pub_date',)
         return Post.objects.filter(
-                author__username=self.kwargs['username']
-            ).annotate(
-                comment_count=models.Count('comments')
-            ).order_by('-pub_date',)
+              author__username=self.kwargs['username']
+              ).annotate(
+               comment_count=models.Count('comments')
+               ).order_by('-pub_date',)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

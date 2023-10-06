@@ -114,7 +114,8 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LIMIT_MIN = 10
-LIMIT_MAX = 50
+LIMIT_MED = 50
+LIMIT_MAX = 256
 
 MEDIA_ROOT = BASE_DIR / 'media'
 

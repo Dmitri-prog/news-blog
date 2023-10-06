@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from blogicum.settings import LIMIT_MAX
+from blogicum.settings import LIMIT_MAX, LIMIT_MED
 
 User = get_user_model()
 
@@ -30,7 +30,7 @@ class Category(BaseModel):
     их описание и идентификатор каждой категории."""
 
     title = models.CharField(
-        max_length=256,
+        max_length=LIMIT_MAX,
         verbose_name='Заголовок'
     )
     description = models.TextField(
@@ -50,14 +50,15 @@ class Category(BaseModel):
         ordering = ('title',)
 
     def __str__(self):
-        return self.title[:LIMIT_MAX]
+        return self.title[:LIMIT_MED]
 
 
 class Location(BaseModel):
     """Модель, описывающая местоположения создания публикаций. Кроме полей
     абстрактной модели содержит поле названия местоположений публикаций."""
 
-    name = models.CharField(max_length=256, verbose_name='Название места')
+    name = models.CharField(max_length=LIMIT_MAX,
+                            verbose_name='Название места')
 
     class Meta:
         verbose_name = 'местоположение'
@@ -65,7 +66,7 @@ class Location(BaseModel):
         ordering = ('name',)
 
     def __str__(self):
-        return self.name[:LIMIT_MAX]
+        return self.name[:LIMIT_MED]
 
 
 class Post(BaseModel):
@@ -77,7 +78,7 @@ class Post(BaseModel):
     Location - связь N:1)."""
 
     title = models.CharField(
-        max_length=256,
+        max_length=LIMIT_MAX,
         verbose_name='Заголовок'
     )
     text = models.TextField(
@@ -119,7 +120,7 @@ class Post(BaseModel):
         default_related_name = 'posts'
 
     def __str__(self):
-        return self.title[:LIMIT_MAX]
+        return self.title[:LIMIT_MED]
 
 
 class Comment(models.Model):
@@ -127,14 +128,18 @@ class Comment(models.Model):
     текст комментария, связанная публикация (из модели Post - связь N:1),
     автор комментария (из встроенной модели User - связь N:1),
     дата и время комментария."""
-    text = models.TextField('Текст')
+    text = models.TextField(
+        verbose_name='Текст'
+    )
     post = models.ForeignKey(
         Post,
         on_delete=models.CASCADE,
+        verbose_name='Публикация'
     )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
+        verbose_name='Автор комментария'
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
@@ -142,5 +147,10 @@ class Comment(models.Model):
     )
 
     class Meta:
+        verbose_name = 'комментарий'
+        verbose_name_plural = 'Комментарии'
         default_related_name = 'comments'
-        ordering = ('created_at', )
+        ordering = ('created_at',)
+
+    def __str__(self):
+        return self.text[:LIMIT_MED]

@@ -1,26 +1,27 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserChangeForm
+from django.utils import timezone
 
 from .models import Comment, Post
 
 User = get_user_model()
 
 
-class UserEditForm(UserChangeForm):
+class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'username', 'email',)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields.pop('password')
+        fields = ('first_name', 'last_name', 'username', 'email')
 
 
 class PostForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['pub_date'].initial = timezone.now
+
     class Meta:
         model = Post
-        exclude = ('author', 'is_published', )
+        fields = ('title', 'text', 'pub_date', 'category', 'location', 'image')
         widgets = {
             'pub_date': forms.DateTimeInput(attrs={'type': 'datetime-local'})
         }

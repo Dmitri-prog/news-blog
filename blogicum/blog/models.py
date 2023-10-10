@@ -1,7 +1,6 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
-
-from blogicum.settings import LIMIT_MAX, LIMIT_MED
 
 User = get_user_model()
 
@@ -30,7 +29,7 @@ class Category(BaseModel):
     их описание и идентификатор каждой категории."""
 
     title = models.CharField(
-        max_length=LIMIT_MAX,
+        max_length=settings.LIMIT_MAX,
         verbose_name='Заголовок'
     )
     description = models.TextField(
@@ -39,9 +38,10 @@ class Category(BaseModel):
     slug = models.SlugField(
         unique=True,
         verbose_name='Идентификатор',
-        help_text='Идентификатор страницы для URL;'
-                  ' разрешены символы латиницы, цифры,'
-                  ' дефис и подчёркивание.'
+        help_text=(
+            'Идентификатор страницы для URL; '
+            'разрешены символы латиницы, цифры, дефис и подчёркивание.'
+        )
     )
 
     class Meta:
@@ -50,14 +50,14 @@ class Category(BaseModel):
         ordering = ('title',)
 
     def __str__(self):
-        return self.title[:LIMIT_MED]
+        return self.title[:settings.LIMIT_MED]
 
 
 class Location(BaseModel):
     """Модель, описывающая местоположения создания публикаций. Кроме полей
     абстрактной модели содержит поле названия местоположений публикаций."""
 
-    name = models.CharField(max_length=LIMIT_MAX,
+    name = models.CharField(max_length=settings.LIMIT_MAX,
                             verbose_name='Название места')
 
     class Meta:
@@ -66,7 +66,7 @@ class Location(BaseModel):
         ordering = ('name',)
 
     def __str__(self):
-        return self.name[:LIMIT_MED]
+        return self.name[:settings.LIMIT_MED]
 
 
 class Post(BaseModel):
@@ -78,7 +78,7 @@ class Post(BaseModel):
     Location - связь N:1)."""
 
     title = models.CharField(
-        max_length=LIMIT_MAX,
+        max_length=settings.LIMIT_MAX,
         verbose_name='Заголовок'
     )
     text = models.TextField(
@@ -86,8 +86,10 @@ class Post(BaseModel):
     )
     pub_date = models.DateTimeField(
         verbose_name='Дата и время публикации',
-        help_text='Если установить дату и время в будущем —'
-                  ' можно делать отложенные публикации.'
+        help_text=(
+            'Если установить дату и время в будущем — '
+            'можно делать отложенные публикации.'
+        )
     )
     author = models.ForeignKey(
         User,
@@ -120,7 +122,7 @@ class Post(BaseModel):
         default_related_name = 'posts'
 
     def __str__(self):
-        return self.title[:LIMIT_MED]
+        return self.title[:settings.LIMIT_MED]
 
 
 class Comment(models.Model):
@@ -128,6 +130,7 @@ class Comment(models.Model):
     текст комментария, связанная публикация (из модели Post - связь N:1),
     автор комментария (из встроенной модели User - связь N:1),
     дата и время комментария."""
+
     text = models.TextField(
         verbose_name='Текст'
     )
@@ -153,4 +156,8 @@ class Comment(models.Model):
         ordering = ('created_at',)
 
     def __str__(self):
-        return self.text[:LIMIT_MED]
+        return (
+            f'"{self.text[:settings.LIMIT_MED]}" '
+            f'(от автора {self.author.username} на публикацию '
+            f'"{self.post.title}")'
+        )

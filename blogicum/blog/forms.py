@@ -1,10 +1,7 @@
 from django import forms
-from django.contrib.auth import get_user_model
 from django.utils import timezone
 
-from .models import Comment, Post
-
-User = get_user_model()
+from .models import Comment, Post, User
 
 
 class UserEditForm(forms.ModelForm):
@@ -23,7 +20,9 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ('title', 'text', 'pub_date', 'category', 'location', 'image')
         widgets = {
-            'pub_date': forms.DateTimeInput(attrs={'type': 'datetime-local'})
+            'pub_date': forms.DateTimeInput(format='%Y-%m-%d %H:%M:%S',
+                                            attrs={'type': 'datetime-local'}
+                                            )
         }
 
 

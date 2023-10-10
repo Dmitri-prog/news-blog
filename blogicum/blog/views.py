@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
 from django.http.response import Http404
@@ -88,6 +87,7 @@ class PostDeleteView(LoginRequiredMixin, PostMixin, AuthorMixin,
 
 
 class ProfileListView(SetMixin, generic.ListView):
+    template_name = 'blog/profile.html'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -109,9 +109,6 @@ class ProfileListView(SetMixin, generic.ListView):
         context = super().get_context_data(**kwargs)
         context['profile'] = self.profile
         return context
-
-    template_name = 'blog/profile.html'
-    paginate_by = settings.LIMIT_MIN
 
 
 class ProfileUpdateView(LoginRequiredMixin, generic.UpdateView):

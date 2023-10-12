@@ -80,7 +80,15 @@ class PostUpdateView(LoginRequiredMixin, PostMixin, AuthorMixin,
 
 
 class PostDeleteView(LoginRequiredMixin, PostMixin, AuthorMixin,
-                     generic.DeleteView, generic.edit.FormMixin):
+                     generic.DeleteView):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        form = PostForm(
+            instance=context['post']
+        )
+        context['form'] = form
+        return context
 
     def get_success_url(self):
         return reverse('blog:profile', args=(self.request.user.username,))

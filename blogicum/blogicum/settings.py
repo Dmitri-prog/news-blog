@@ -1,15 +1,13 @@
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-6pn*vk*$9ii%i8ax1j^vt5)ky@0(5i#9_moq)g-&&ax4y44)!q'
+SECRET_KEY = os.getenv('SECRET_KEY', 'KEY_FOR_EXAMPLE')
 
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-]
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1 localhost').split()
 
 INSTALLED_APPS = [
     'pages.apps.PagesConfig',

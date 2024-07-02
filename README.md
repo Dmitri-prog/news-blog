@@ -1,6 +1,6 @@
 ### Проект сайта новостного блога
-[![Python](https://img.shields.io/badge/-Python-464646?style=flat-square&logo=Python)](https://www.python.org/)
-[![Django](https://img.shields.io/badge/-Django-464646?style=flat-square&logo=Django)](https://www.djangoproject.com/)
+[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)](https://www.djangoproject.com/)
 [![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
 
@@ -11,7 +11,7 @@
 
 ### Как запустить проект:
 
-Клонировать репозиторий и перейти в него в командной строке:
+1. Клонировать репозиторий и перейти в него в командной строке:
 
 ```
 git clone https://github.com/Dmitri-prog/news-blog.git
@@ -21,7 +21,14 @@ git clone https://github.com/Dmitri-prog/news-blog.git
 cd news-blog
 ```
 
-Cоздать и активировать виртуальное окружение:
+2. Cоздать в корне проекта файл .env и заполнить его (пример файла .env см. в приложенном файле .env.example). Описание переменных виртуального окружения файла .env для работы проекта:
+```
+SECRET_KEY - cекретный ключ установки Django. Он используется в контексте криптографической подписи и должен иметь уникальное, непредсказуемое значение. Новый оригинальный секретный ключ можно получить при помощи функции get_random_secret_key(), импортируемой из django.core.management.utils;
+DEBUG - настройка вывода отладочной информации в Django-проекте, указывается в файле settings.py, при развертывании проекта должно быть установлено значение False
+ALLOWED_HOSTS - список хостов/доменов, для которых может работать текущий проект. По умолчанию доступны хосты '127.0.0.1' и 'localhost'.
+```
+
+3. Cоздать и активировать виртуальное окружение:
 
 Windows
 ```
@@ -34,7 +41,7 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-Обновить PIP
+4. Обновить PIP
 
 Windows
 ```
@@ -51,7 +58,7 @@ python3 -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-Выполнить миграции:
+5. Выполнить миграции:
 
 Windows
 ```
@@ -75,7 +82,11 @@ Linux/macOS
 python3 manage.py runserver
 ```
 
-При желании, на сайт можно загрузить примеры публикаций:
-
+6. При желании, на сайт можно загрузить примеры публикаций:
+```
 python manage.py loaddata db.json
 ```
+
+#### Автор
+
+Марков Дмитрий - [https://github.com/Dmitri-prog/](https://github.com/Dmitri-prog/)

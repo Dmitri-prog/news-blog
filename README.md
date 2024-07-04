@@ -94,4 +94,4 @@ python manage.py loaddata db.json
 
 #### Автор
 
-Марков Дмитрий - [https://github.com/Dmitri-prog/](https://github.com/Dmitri-prog/)
+Марков Дмитрий

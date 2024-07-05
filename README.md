@@ -63,14 +63,20 @@ python3 -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-6. Выполнить миграции:
+6. Перейти в директорию с файлом manage.py и выполнить миграции:
 
 Windows
+```
+cd blogicum
+```
 ```
 python manage.py migrate
 ```
 
 Linux/macOS
+```
+cd blogicum
+```
 ```
 python3 manage.py migrate
 ```
